@@ -115,4 +115,228 @@ textarea {
 }
 
 @keyframes appear {
-  from { opacity: 0; transform: translateY(12
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.08); }
+}
+
+#music { width: 100%; margin-top: 12px; }
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1: WELCOME -->
+<section class="screen active" id="s0">
+  <div class="card">
+    <div style="font-size:55px">🎀💗🎀</div>
+    <p>A LITTLE BIRTHDAY SURPRISE</p>
+    <h1>Dear SAMJANA 💕</h1>
+    <p>Sahil has prepared something special for you...</p>
+    <p>Are you ready? 🎂❤️</p>
+    <button onclick="start()">LET'S BEGIN 💖</button>
+    <p class="small">Made with love by Sahil 💌</p>
+  </div>
+</section>
+
+<!-- PAGE 2: MUSIC -->
+<section class="screen" id="s1">
+  <div class="card">
+    <h1>🎵 Our Song</h1>
+    <p>A little music to make your day special. 💗</p>
+
+    <audio id="music" controls loop preload="auto">
+      <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <p class="small" id="musicStatus">
+      If the song doesn't play, choose the audio file below.
+    </p>
+
+    <input type="file" id="songUpload" accept="audio/*">
+
+    <button onclick="next(2)">NEXT 💕</button>
+  </div>
+</section>
+
+<!-- PAGE 3: PHOTOS -->
+<section class="screen" id="s2">
+  <div class="card">
+    <h1>📸 Little Memories</h1>
+    <p>Some pictures to make this surprise even more special. 💗</p>
+
+    <input type="file" id="photoUpload" accept="image/*" multiple>
+
+    <div id="gallery">
+      <p class="small">Your selected photos will appear here.</p>
+    </div>
+
+    <button onclick="next(3)">NEXT ❤️</button>
+  </div>
+</section>
+
+<!-- PAGE 4: BIRTHDAY WISH -->
+<section class="screen" id="s3">
+  <div class="card">
+    <div style="font-size:65px">🎂🎉💗</div>
+    <h1>Happy Birthday!</h1>
+    <h2>Samjana ❤️</h2>
+
+    <p>
+      Today is your special day, and I hope it brings you
+      countless reasons to smile.
+    </p>
+
+    <p>
+      May your life always be filled with happiness,
+      beautiful memories, and people who truly care about you.
+    </p>
+
+    <p>Keep smiling and keep being yourself. 🌷</p>
+
+    <button onclick="next(4)">ONE LAST SURPRISE 💌</button>
+  </div>
+</section>
+
+<!-- PAGE 5: LETTER -->
+<section class="screen" id="s4">
+  <div class="card">
+    <h1>A Little Letter 💌</h1>
+
+    <div id="envelope" onclick="openLetter()">💌</div>
+    <p>Tap the envelope to open your letter.</p>
+
+    <div id="letterArea" style="display:none">
+      <h2>Dear Samjana ❤️</h2>
+
+      <p id="letterResult">I hope this little surprise brings a smile to your face. You deserve happiness, love, and beautiful moments in life.
+
+May all your wishes come true.
+
+Lots of love from Sahil ❤️</p>
+
+      <button onclick="next(5)">FINAL WISH ✨</button>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 6: FINAL -->
+<section class="screen" id="s5">
+  <div class="card">
+    <div style="font-size:65px">💗🎂🌷</div>
+    <h1>Happy Birthday, Samjana!</h1>
+
+    <p>
+      May all your wishes come true.
+      May you always have reasons to smile and dreams to chase.
+    </p>
+
+    <h2>Lots of love from Sahil ❤️</h2>
+    <p>Always keep smiling. 💕</p>
+
+    <button onclick="restart()">WATCH AGAIN ↻</button>
+  </div>
+</section>
+
+<script>
+let currentScreen = 0;
+
+function showScreen(number) {
+  document.querySelectorAll('.screen').forEach(function(screen) {
+    screen.classList.remove('active');
+  });
+
+  const target = document.getElementById('s' + number);
+
+  if (target) {
+    target.classList.add('active');
+    currentScreen = number;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+}
+
+function start() {
+  showScreen(1);
+
+  // Attempt playback after the user's button tap.
+  const music = document.getElementById('music');
+
+  music.play().then(function() {
+    document.getElementById('musicStatus').textContent =
+      'Your song is playing. 💗';
+  }).catch(function() {
+    document.getElementById('musicStatus').textContent =
+      'Tap the play button to start your song. 🎵';
+  });
+}
+
+function next(number) {
+  showScreen(number);
+}
+
+function openLetter() {
+  document.getElementById('letterArea').style.display = 'block';
+  document.getElementById('envelope').style.display = 'none';
+}
+
+function restart() {
+  showScreen(0);
+}
+
+const songUpload = document.getElementById('songUpload');
+
+songUpload.addEventListener('change', function(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const music = document.getElementById('music');
+  music.src = URL.createObjectURL(file);
+  music.load();
+
+  music.play().then(function() {
+    document.getElementById('musicStatus').textContent =
+      'Your selected song is playing. 💗';
+  }).catch(function() {
+    document.getElementById('musicStatus').textContent =
+      'Tap play to listen to your selected song.';
+  });
+});
+
+document.getElementById('photoUpload').addEventListener('change', function(event) {
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '';
+
+  Array.from(event.target.files).forEach(function(file) {
+    if (!file.type.startsWith('image/')) return;
+
+    const image = document.createElement('img');
+    image.className = 'photo';
+    image.alt = 'Birthday memory';
+    image.src = URL.createObjectURL(file);
+
+    gallery.appendChild(image);
+  });
+});
+
+// Floating hearts
+setInterval(function() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = ['💗', '💕', '❤️', '💖'][Math.floor(Math.random() * 4)];
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+
+  document.body.appendChild(heart);
+
+  setTimeout(function() {
+    heart.remove();
+  }, 7000);
+}, 900);
+</script>
+
+</body>
+</html>
