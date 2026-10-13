@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dear SAMJANA 💗</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  color: #9d416b;
+  text-align: center;
+  background: linear-gradient(135deg, #fff8fc, #ffe0ef, #fff);
+  overflow-x: hidden;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 35px 18px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.screen.active {
+  display: flex;
+  animation: appear 0.8s ease;
+}
+
+h1 {
+  font-size: clamp(30px, 8vw, 48px);
+}
+
+h2 {
+  font-size: 27px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+button {
+  background: linear-gradient(135deg, #ff8fbd, #f05b9a);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 23px;
+  font-size: 16px;
+  margin: 9px;
+  cursor: pointer;
+  box-shadow: 0 5px 18px #f6a7cb77;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+.card {
+  background: #ffffffd9;
+  border: 1px solid #ffd0e4;
+  border-radius: 25px;
+  padding: 25px 19px;
+  width: min(100%, 430px);
+  box-shadow: 0 10px 35px #d95b901c;
+}
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  pointer-events: none;
+  animation: floatUp 7s linear forwards;
+  z-index: 5;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+input[type="file"] {
+  width: 100%;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #f4a5c9;
+  border-radius: 12px;
+  margin: 10px 0;
+  font: inherit;
+  color: #87395e;
+}
+
+textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.photo {
+  width: 100%;
+  max-height: 330px;
+  object-fit: contain;
+  border-radius: 18px;
+  margin-top: 12px;
+}
+
+#envelope {
+  font-size: 100px;
+  cursor: pointer;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.small {
+  font-size: 13px;
+  color: #aa6885;
+}
+
+#musicStatus {
+  font-size: 13px;
+}
+
+#music {
+  width: 100%;
+  margin-top: 12px;
+}
+
+#answers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#letterResult {
+  overflow-wrap: anywhere;
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME -->
+<section class="screen active" id="s0">
+  <div class="card">
+    <div style="font-size:55px">🎀💗🎀</div>
+
+    <p>A LITTLE BIRTHDAY SURPRISE</p>
+
+    <h1>Dear SAMJANA 💕</h1>
+
+    <p>Sahil has prepared something special for you...</p>
+
+    <p>Are you ready? 🎂❤️</p>
+
+    <button onclick="start()">LET'S BEGIN 💖</button>
+
+    <p class="small">Made with love by Sahil 💌</p>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section class="screen" id="s1">
+  <div class="card">
+    <h1>🎵 Our Song</h1>
+
+    <p>Choose a song to play during your birthday surprise. 💗</p>
+
+    <input type="file" id="
